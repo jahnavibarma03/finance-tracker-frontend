@@ -1,0 +1,17 @@
+.card {
+  border-radius: 12px !important;
+}
+
+@media (max-width: 768px) {
+  .navbar .btn {
+    margin-bottom: 5px;
+  }
+
+  .card {
+    margin: 10px;
+  }
+
+  .list-group-item {
+    font-size: 0.95rem;
+  }
+}
