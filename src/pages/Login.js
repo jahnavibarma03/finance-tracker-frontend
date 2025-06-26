@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
 
 function Login() {
   const navigate = useNavigate();
@@ -14,15 +14,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const res = await axios.post("http://localhost:5000/api/auth/login", form);
-        localStorage.setItem("token", res.data.token);
-        toast.success("Logged in successfully!"); // ✅ Toast on success
-        navigate("/");
+      const res = await API.post("/auth/login", form);
+      localStorage.setItem("token", res.data.token);
+      toast.success("Logged in successfully!");
+      navigate("/");
     } catch (err) {
-        toast.error("Invalid email or password!"); // ❌ Toast on error
-  }
-};
-
+      toast.error("Invalid email or password!");
+    }
+  };
 
   return (
     <div className="container mt-5">

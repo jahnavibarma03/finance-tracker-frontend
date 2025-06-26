@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import API from "../services/api";
 import "../components/components.css";
 
-
 const AddTransaction = ({ onAdd }) => {
   const [form, setForm] = useState({
     type: "income",
@@ -17,7 +16,7 @@ const AddTransaction = ({ onAdd }) => {
     e.preventDefault();
     try {
       await API.post("/transactions", form);
-      onAdd(); // refresh list
+      onAdd(); 
       setForm({ ...form, amount: "", category: "", description: "" });
       toast.success("Transaction added!");
     } catch (err) {

@@ -21,7 +21,7 @@ function TransactionList() {
         headers: { Authorization: `Bearer ${token}` },
         });
         toast.success("Transaction deleted!");
-        fetchTransactions(); // Refresh the list after successful deletion
+        fetchTransactions();
     } catch (error) {
         console.error("Delete error:", error);
         toast.error("Failed to delete transaction");
