@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://finance-backend-1epq.onrender.com",
+  baseURL: "https://finance-backend-1epq.onrender.com/api",
+  withCredentials: true,
 });
 
 // Send token with every request
