@@ -17,7 +17,7 @@ function Login() {
       const res = await API.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
       toast.success("Logged in successfully!");
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       toast.error("Invalid email or password!");
     }
