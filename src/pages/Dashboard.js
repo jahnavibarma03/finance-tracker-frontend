@@ -13,15 +13,16 @@ function Dashboard() {
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const res = await API.get("/transactions"); // Auth token is handled by interceptor
+      const res = await API.get("/transactions"); 
       setTransactions(res.data);
     } catch (err) {
-      console.error("Error fetching:", err);
+      console.error("Error fetching transactions:", err);
     } finally {
       setLoading(false);
     }
   };
 
+  
   useEffect(() => {
     fetchTransactions();
   }, []);
@@ -36,10 +37,10 @@ function Dashboard() {
           <SummaryBar transactions={transactions} />
           <div className="row">
             <div className="col-md-6 mb-4">
-              <AddTransaction />
+              <AddTransaction onAdd={fetchTransactions} />
             </div>
             <div className="col-md-6 mb-4">
-              <TransactionList />
+              <TransactionList transactions={transactions} />
             </div>
             <div className="col-md-12">
               <ExpenseChart transactions={transactions} />
