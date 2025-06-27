@@ -1,36 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import API from "../services/api";
+import EditTransaction from "./EditTransaction";
 
-function TransactionList() {
-  const [transactions, setTransactions] = useState([]);
-
-  const fetchTransactions = async () => {
-    const token = localStorage.getItem("token");
-    const res = await axios.get("http://localhost:5000/api/transactions", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    setTransactions(res.data);
-  };
+function TransactionList({ transactions, onRefresh }) {
+  const [editingTx, setEditingTx] = useState(null);
 
   const handleDelete = async (id) => {
-    const token = localStorage.getItem("token");
-    
     try {
-        await axios.delete(`http://localhost:5000/api/transactions/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        });
-        toast.success("Transaction deleted!");
-        fetchTransactions();
+      await API.delete(`/transactions/${id}`);
+      toast.success("Transaction deleted!");
+      onRefresh();
     } catch (error) {
-        console.error("Delete error:", error);
-        toast.error("Failed to delete transaction");
+      console.error("Delete error:", error);
+      toast.error("Failed to delete transaction");
     }
-};
-
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
+  };
 
   return (
     <div>
@@ -38,9 +23,11 @@ function TransactionList() {
       <ul className="list-group">
         {transactions.map((tx) => (
           <li
-            key={tx.id}
+            key={tx.id || tx._id}
             className={`list-group-item d-flex justify-content-between align-items-center ${
-              tx.type === "expense" ? "list-group-item-danger" : "list-group-item-success"
+              tx.type === "expense"
+                ? "list-group-item-danger"
+                : "list-group-item-success"
             }`}
           >
             <div>
@@ -48,12 +35,31 @@ function TransactionList() {
               <br />
               <small className="text-muted">{tx.date}</small>
             </div>
-            <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(tx.id)}>
-              ✕
-            </button>
+            <div>
+              <button
+                className="btn btn-sm btn-outline-primary me-2"
+                onClick={() => setEditingTx(tx)}
+              >
+                ✎
+              </button>
+              <button
+                className="btn btn-sm btn-outline-danger"
+                onClick={() => handleDelete(tx._id || tx.id)}
+              >
+                ✕
+              </button>
+            </div>
           </li>
         ))}
       </ul>
+
+      {editingTx && (
+        <EditTransaction
+          transaction={editingTx}
+          onClose={() => setEditingTx(null)}
+          onUpdate={onRefresh}
+        />
+      )}
     </div>
   );
 }

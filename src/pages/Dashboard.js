@@ -40,7 +40,7 @@ function Dashboard() {
               <AddTransaction onAdd={fetchTransactions} />
             </div>
             <div className="col-md-6 mb-4">
-              <TransactionList transactions={transactions} />
+              <TransactionList transactions={transactions} onRefresh={fetchTransactions} />
             </div>
             <div className="col-md-12">
               <ExpenseChart transactions={transactions} />
