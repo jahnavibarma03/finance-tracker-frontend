@@ -6,6 +6,8 @@ Chart.register(ArcElement, Tooltip, Legend);
 function ExpenseChart({ transactions }) {
   const expenses = transactions.filter((t) => t.type === "expense");
 
+  if (expenses.length === 0) return null; // Don't render chart if no data
+
   const data = {
     labels: expenses.map((t) => t.category),
     datasets: [
@@ -26,9 +28,9 @@ function ExpenseChart({ transactions }) {
   };
 
   return (
-    <div className="mt-4">
-      <h5 className="text-center">Expense Chart</h5>
-      <Pie data={data} />
+    <div className="chart-container">
+      <h5 className="text-center mb-3">Expense Chart</h5>
+      <Pie data={data} height={200} />
     </div>
   );
 }

@@ -13,7 +13,7 @@ function Dashboard() {
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const res = await API.get("/transactions"); 
+      const res = await API.get("/transactions");
       setTransactions(res.data);
     } catch (err) {
       console.error("Error fetching transactions:", err);
@@ -22,7 +22,6 @@ function Dashboard() {
     }
   };
 
-  
   useEffect(() => {
     fetchTransactions();
   }, []);
@@ -36,14 +35,14 @@ function Dashboard() {
         <>
           <SummaryBar transactions={transactions} />
           <div className="row">
-            <div className="col-md-6 mb-4">
+            <div className="col-md-6">
               <AddTransaction onAdd={fetchTransactions} />
+              <TransactionList transactions={transactions} onDelete={fetchTransactions} />
             </div>
-            <div className="col-md-6 mb-4">
-              <TransactionList transactions={transactions} onRefresh={fetchTransactions} />
-            </div>
-            <div className="col-md-12">
-              <ExpenseChart transactions={transactions} />
+            <div className="col-md-6">
+              {transactions.some((t) => t.type === "expense") && (
+                <ExpenseChart transactions={transactions} />
+              )}
             </div>
           </div>
         </>

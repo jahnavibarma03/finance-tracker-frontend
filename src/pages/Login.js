@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
 
@@ -16,6 +16,7 @@ function Login() {
     try {
       const res = await API.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
+      setIsAuthenticated(true); // ✅ Notify App.js
       toast.success("Logged in successfully!");
       navigate("/dashboard");
     } catch (err) {
@@ -29,10 +30,11 @@ function Login() {
         <h3 className="text-center mb-4">Login</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
+            <label>Email</label>
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="Enter email"
               className="form-control"
               value={form.email}
               onChange={handleChange}
@@ -41,10 +43,11 @@ function Login() {
           </div>
 
           <div className="mb-3">
+            <label>Password</label>
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Enter password"
               className="form-control"
               value={form.password}
               onChange={handleChange}

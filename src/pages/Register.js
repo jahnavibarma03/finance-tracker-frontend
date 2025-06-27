@@ -28,10 +28,11 @@ function Register() {
         <h3 className="text-center mb-4">Register</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
+            <label>Username</label>
             <input
               type="text"
               name="username"
-              placeholder="Username"
+              placeholder="Enter username"
               className="form-control"
               value={form.username}
               onChange={handleChange}
@@ -40,10 +41,11 @@ function Register() {
           </div>
 
           <div className="mb-3">
+            <label>Email</label>
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="Enter email"
               className="form-control"
               value={form.email}
               onChange={handleChange}
@@ -52,10 +54,11 @@ function Register() {
           </div>
 
           <div className="mb-3">
+            <label>Password</label>
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Enter password"
               className="form-control"
               value={form.password}
               onChange={handleChange}

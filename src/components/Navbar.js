@@ -1,23 +1,24 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ isAuthenticated, setIsAuthenticated }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setIsAuthenticated(false);
     navigate("/login");
   };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <span className="navbar-brand">💰 Finance Tracker</span>
-      <div className="ms-auto">
-        <Link to="/login" className="btn btn-outline-light me-2">Login</Link>
-        <Link to="/register" className="btn btn-outline-light me-2">Register</Link>
-        <button onClick={handleLogout} className="btn btn-danger">
-          Logout
-        </button>
+      <span className="navbar-brand">💸 Finance Tracker</span>
+      <div className="ml-auto">
+        {isAuthenticated && (
+          <button className="btn btn-danger btn-sm" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </nav>
   );
